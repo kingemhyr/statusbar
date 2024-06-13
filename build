@@ -1,0 +1,3 @@
+#!/bin/env sh
+
+clang statusbar.c -o statusbar -lasound -lm -O3
