@@ -1,0 +1,5 @@
+#!/bin/env sh
+
+./build
+killall ~/bin/statusbar
+cp statusbar ~/bin/statusbar
