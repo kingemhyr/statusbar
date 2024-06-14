@@ -7,6 +7,8 @@ the [sway](https://swaywm.org/) statusbar that i use written in pure C!!!
 
 ## plans
 
-i have no plans other than adding things i want without a care for generalizing the half-ass codebase.
+i have no plans other than adding things i want without a care for generalizing this half-ass codebase.
+
+## pics
 
 ![bruh](./ss.png)
