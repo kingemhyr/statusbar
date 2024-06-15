@@ -220,13 +220,24 @@ int main(void)
 		}
 
 		// volume
-		int volume;
+		char sound[8];
 		{
-			updated |= snd_mixer_handle_events(mixer) > 0;
+			static long prior_playback_volume = 0;
+			static long prior_muted = 0;
+			snd_mixer_handle_events(mixer);
 			long playback_volume;
 			if ((error = snd_mixer_selem_get_playback_volume(mixer_elem, 0, &playback_volume)) < 0)
 				err("%s", snd_strerror(error));
-			volume = round((float)(playback_volume - min_playback_volume) / (max_playback_volume - min_playback_volume) * 100);
+			prior_playback_volume = playback_volume;
+			int volumeval = round((float)(playback_volume - min_playback_volume) / (max_playback_volume - min_playback_volume) * 100);
+			int muted;
+			snd_mixer_selem_get_playback_switch(mixer_elem, SND_MIXER_SCHN_MONO, &muted);
+			prior_muted = muted;
+			if (!muted)
+				strcpy(sound, "mute");
+			else
+				sprintf(sound, "%i%%", volumeval);
+			updated |= (muted != prior_muted) || (playback_volume != prior_playback_volume);
 		}
 
 		// power
@@ -343,7 +354,7 @@ int main(void)
 		// print
 		if (updated)
 		{
-			printf("volume: %i%% | power: %i%% %s | cpu: %i%% | temp: %iC | ram: %i%% | swap: %i%% | brightness: %i%% | date: %s\n", volume, power, power_status, cpu, temp, mem_perc, swap_perc, brightness, date);
+			printf("volume: %s | power: %i%% %s | cpu: %i%% | temp: %iC | ram: %i%% | swap: %i%% | brightness: %i%% | date: %s\n", sound, power, power_status, cpu, temp, mem_perc, swap_perc, brightness, date);
 			fflush(stdout);
 		}
 	}
