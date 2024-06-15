@@ -354,7 +354,7 @@ int main(void)
 		// print
 		if (updated)
 		{
-			printf("volume: %s | power: %i%% %s | cpu: %i%% | temp: %iC | ram: %i%% | swap: %i%% | brightness: %i%% | date: %s\n", sound, power, power_status, cpu, temp, mem_perc, swap_perc, brightness, date);
+			printf("sound: %s | power: %i%% %s | cpu: %i%% | temp: %iC | ram: %i%% | swap: %i%% | brightness: %i%% | date: %s\n", sound, power, power_status, cpu, temp, mem_perc, swap_perc, brightness, date);
 			fflush(stdout);
 		}
 	}
